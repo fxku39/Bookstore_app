@@ -1,12 +1,12 @@
 from tkinter import *
 import bookstoreback
 
-# We define a function to select rows so we can delete that row from our db or update and fill the labels with that information
+# We define a function to select rows so we can fill the labels with that information and delete or update that row from our db
 
 def get_selected_row(event):
     try:
         global selected_tuple # Declaration of global variable so we can use it in the function delete
-        index=list1.curselection()[0] # This line of code retrieves the number of the index of the element we click on our listbox
+        index=list1.curselection()[0] # This line of code retrieves the index number of the element we click on our listbox
         selected_tuple = list1.get(index) # This line of code retrieves the entire elements as a tuple based of the index number of each row
         # Then we delete and insert the information of the row we clicked on each label space
         e1.delete(0,END)
@@ -24,18 +24,17 @@ def get_selected_row(event):
 ## We create a function to link our view button with our view function in the backend and
 ## ensure when we click it, it displays the entire database and doesn't repeat itself for each click
 def view_command():
-    list1.delete(0,END)
+    list1.delete(0,END) #This line of code delete all the element present in the listbox
     for row in bookstoreback.view():
         list1.insert(END, row)
 
-## 
+## We create a function to link the "Search button" with our search function in the backend
 def search_command():
     list1.delete(0,END)
     for row in bookstoreback.search(title_ent.get(), author_ent.get(), year_ent.get(), isbn_ent.get()):
         list1.insert(END, row)
 
-## We create a function to link our add entry button with out insert function in the backend
-## 
+## We create a function to link the "add entry" button with out insert function in the backend
 def add_command():
     bookstoreback.insert(title_ent.get(), author_ent.get(), year_ent.get(), isbn_ent.get())
     list1.delete(0,END)
@@ -68,7 +67,7 @@ l3.grid(row=1, column=0)
 l4= Label(window, text= "ISBN")
 l4.grid(row=1, column=2)
 
-## Entry
+## Creation of each entry space where the user can input data of the books.
 
 title_ent=StringVar()
 e1= Entry(window, textvariable=title_ent)
@@ -86,7 +85,7 @@ isbn_ent=StringVar()
 e4= Entry(window, textvariable=isbn_ent)
 e4.grid(row=1, column=3)
 
-## Creation of the listbox
+## Creation of the listbox where the books will be shown and also can being selected to autofill the labels so it can update or delete them.
 
 list1=Listbox(window, height=15, width=30)
 list1.grid(row=2, column=0, rowspan=6, columnspan=2)
